@@ -7,12 +7,18 @@ class Handler implements URLHandler {
     int num = 0;
 
     public String handleRequest(URI url) {
+        //The default page with no extra path just shows the number
         if (url.getPath().equals("/")) {
-            return String.format("Number: %d", num);
-        } else if (url.getPath().equals("/increment")) {
+            return String.format("Number: %d :)", num);
+        } 
+        //The path /increment adds 1 to the number and displays "Number incremented!"
+        else if (url.getPath().equals("/increment")) {
             num += 1;
             return String.format("Number incremented!");
-        } else {
+        } 
+        //Allows the user to add a number to the current number
+        //by entering it as a query after the path /add.
+        else {
             System.out.println("Path: " + url.getPath());
             if (url.getPath().contains("/add")) {
                 String[] parameters = url.getQuery().split("=");
@@ -21,6 +27,7 @@ class Handler implements URLHandler {
                     return String.format("Number increased by %s! It's now %d", parameters[1], num);
                 }
             }
+            //If the URL is not any of the valid operations, return an error message
             return "404 Not Found!";
         }
     }
